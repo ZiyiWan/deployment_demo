@@ -24,27 +24,38 @@ function PatientDetail() {
   const [dataSource, setDataSource] = useState([]);
 
   useEffect(() => {
-    getPatientById(patientID).then((res: any) => {
+    getPatientById(router.asPath.slice(9)).then((res: any) => {
       console.log(res);
       res = res[0].resource;
       console.log(res);
-      let addressList = res.address[0];
-      const address: string =
-        addressList.line[0] +
-        ", " +
-        addressList.city +
-        ", " +
-        addressList.state +
-        ", " +
-        addressList.postalCode +
-        ", " +
-        addressList.country;
+      let address = "";
+      let contactNum = "";
+      if ("address" in res) {
+        let addressList = res.address[0];
+        address =
+          addressList.line[0] +
+          ", " +
+          addressList.city +
+          ", " +
+          addressList.state +
+          ", " +
+          addressList.postalCode +
+          ", " +
+          addressList.country;
+      } else {
+        address = "Unknow";
+      }
+      if ("telecom" in res) {
+        contactNum = res.telecom[0].value;
+      } else {
+        contactNum = "Unknow";
+      }
       const currentPatient: PatientData = {
         name: res.name,
         DOB: res.birthDate,
         Sex: res.gender,
         address: address,
-        telecom: res.telecom[0].value,
+        telecom: contactNum,
       };
       setPatient(currentPatient);
     });
@@ -66,6 +77,7 @@ function PatientDetail() {
             status: medInfo.resource.status,
           };
           data.push(info);
+          console.log(info);
         });
         setDataSource(data);
       }
@@ -84,16 +96,13 @@ function PatientDetail() {
       key: "content",
     },
     {
-      title: "Practitioner",
-      dataIndex: "practitioner",
-      key: "practitioner",
-    },
-    {
       title: "Status",
       key: "status",
       render: (record: any) => {
         if (record.status === "stopped") {
           return <Tag color="red">{record.status}</Tag>;
+        } else {
+          return <Tag color="green">{record.status}</Tag>;
         }
       },
     },
@@ -153,7 +162,11 @@ function PatientDetail() {
               minHeight: 280,
             }}
           >
-            <Table columns={columns} dataSource={dataSource} />
+            <Table
+              columns={columns}
+              dataSource={dataSource}
+              style={{ width: "75%" }}
+            />
           </Content>
         </Layout>
       </Layout>

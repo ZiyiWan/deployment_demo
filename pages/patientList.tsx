@@ -24,16 +24,28 @@ function PatientList() {
   useEffect(() => {
     getPatientList(currentPage).then((res: any) => {
       console.log("Response in ini: " + res);
-      console.log(res[0].resource.name[0].given[0]);
+      //console.log(res[0].resource.name[0].given[0]);
       const data: any = [];
       res.map((patient: any) => {
-        let info = {
-          id: patient.resource.id,
-          name: patient.resource.name[0].given[0],
-          birthDate: patient.resource.birthDate,
-          gender: patient.resource.gender,
-        };
-        data.push(info);
+        if ("name" in patient.resource) {
+          let info = {
+            id: patient.resource.id,
+            //name:"test",
+            name: patient.resource.name[0].given[0],
+            birthDate: patient.resource.birthDate,
+            gender: patient.resource.gender,
+          };
+          data.push(info);
+        }else{
+          let info = {
+            id: patient.resource.id,
+            name:"Unknow",
+            //name: patient.resource.name[0].given[0],
+            birthDate: patient.resource.birthDate,
+            gender: patient.resource.gender,
+          };
+          data.push(info);
+        }
       });
 
       setDataSource(data);
@@ -67,39 +79,25 @@ function PatientList() {
     },
   ];
 
-  // const dataSource = [
-  //   {
-  //     key: "1",
-  //     name: "Alice",
-  //     age: 32,
-  //     gender: "Female",
-  //   },
-  //   {
-  //     key: "2",
-  //     name: "Tom",
-  //     age: 42,
-  //     gender: "Male",
-  //   },
-  // ];
   async function onSearch(value: string) {
     console.log("Search on Click");
-    console.log("Input value: "+value);
+    console.log("Input value: " + value);
     console.log(value.length);
     var isID: boolean = /^[0-9]*$/.test(value);
     if (value.length === 0) {
       setIsId(false);
-      console.log("Should go in none ID")
+      console.log("Should go in none ID");
     } else {
       setIsId(isID);
     }
     //setSearchFlag(true);
     setSearchingField(value);
-    console.log("isId:"+isId);
-    console.log("isID:"+isID)
+    console.log("isId:" + isId);
+    console.log("isID:" + isID);
     if (isId) {
       console.log("Go in Id search");
-      const patientID = parseInt(searchingField);
-      const data = await getPatientById(patientID).then((res: any) => {
+      //const patientID = parseInt(searchingField);
+      const data = await getPatientById(searchingField).then((res: any) => {
         console.log("Response in ID Search :" + res);
         //console.log(res[0].resource.name[0].given[0]);
         const data: any = [];
@@ -119,8 +117,8 @@ function PatientList() {
     } else {
       if (searchingField) {
         console.log("Go in Name search");
-        const data = await getPatientsByName(searchingField, currentPage).then(
-          (res: any) => {
+        const data = await getPatientsByName(searchingField, currentPage)
+          .then((res: any) => {
             console.log("Response in Name Search: " + res);
             console.log(res[0].resource.name[0].given[0]);
             const data: any = [];
@@ -134,10 +132,10 @@ function PatientList() {
               data.push(info);
             });
             return data;
-          }
-        ).catch((err:any)=>{
-            console.log("ERROR: " + err)
-        });
+          })
+          .catch((err: any) => {
+            console.log("ERROR: " + err);
+          });
         setDataSource(data);
       } else {
         console.log("Go in Empty search");
@@ -171,13 +169,25 @@ function PatientList() {
         console.log("page info:" + res[0].resource.name[0].given[0]);
         const data: any = [];
         res.map((patient: any) => {
-          let info = {
-            id: patient.resource.id,
-            name: patient.resource.name[0].given[0],
-            birthDate: patient.resource.birthDate,
-            gender: patient.resource.gender,
-          };
-          data.push(info);
+          if ("name" in patient.resource) {
+            let info = {
+              id: patient.resource.id,
+              //name:"test",
+              name: patient.resource.name[0].given[0],
+              birthDate: patient.resource.birthDate,
+              gender: patient.resource.gender,
+            };
+            data.push(info);
+          }else{
+            let info = {
+              id: patient.resource.id,
+              name:"Unknow",
+              //name: patient.resource.name[0].given[0],
+              birthDate: patient.resource.birthDate,
+              gender: patient.resource.gender,
+            };
+            data.push(info);
+          }
         });
 
         setDataSource(data);
