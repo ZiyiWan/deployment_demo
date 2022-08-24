@@ -16,6 +16,7 @@ function PatientList() {
   //const [searchFlag, setSearchFlag] = useState(false);
   const [searchingField, setSearchingField] = useState("");
   const [isId, setIsId] = useState(Boolean);
+  const [loading, setLoading] = useState(true);
 
   const { Header, Content, Footer } = Layout;
   const { Search } = Input;
@@ -47,8 +48,8 @@ function PatientList() {
           data.push(info);
         }
       });
-
       setDataSource(data);
+      setLoading(false);
     });
   }, []);
 
@@ -62,7 +63,7 @@ function PatientList() {
       title: "Name",
       key: "name",
       render: (record: any) => (
-        <Link href={`/patientDetail`} as={`/Patient/${record.id}`}>
+        <Link href={`/patient/MedicationRequest/`+record.id}>
           <a>{record.name}</a>
         </Link>
       ),
@@ -238,6 +239,7 @@ function PatientList() {
               dataSource={dataSource}
               columns={columns}
               style={{ marginTop: "8px" }}
+              loading={loading}
               pagination={{
                 defaultPageSize: 10,
                 total: 122951,

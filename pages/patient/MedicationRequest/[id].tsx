@@ -1,6 +1,11 @@
+import { Header, Content } from "antd/lib/layout/layout";
+import Sider from "antd/lib/layout/Sider";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getMedResById, getPatientById } from "../../../apiservice/axios";
+import { PatientData } from "../../../dataModel/dataModel";
+import { columnsOfMedRequest } from "../../../pageComponent/tableComponents";
 import {
-  BarsOutlined,
-  DiffOutlined,
   ForkOutlined,
   LaptopOutlined,
   NotificationOutlined,
@@ -9,26 +14,23 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { MenuProps, Space, Table, Tag } from "antd";
-import { Breadcrumb, Layout, Menu, Avatar } from "antd";
+import { Avatar, MenuProps, Space, Table } from "antd";
+import { Breadcrumb, Layout, Menu } from "antd";
+import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { getMedResById, getPatientById } from "../apiservice/axios";
-import { PatientData } from "../dataModel/dataModel";
 
 function PatientDetail() {
   const router = useRouter();
-  const { Header, Content, Sider } = Layout;
-  const patientID: number = parseInt(router.asPath.slice(9));
+  const query = router.query;
+  const id = query.id;
   const [patient, setPatient] = useState<PatientData>();
   const [dataSource, setDataSource] = useState([]);
+  const { Header, Content, Sider } = Layout;
 
   useEffect(() => {
-    getPatientById(router.asPath.slice(9)).then((res: any) => {
-      console.log(res);
+    if (!router.isReady) return;
+    getPatientById(id).then((res: any) => {
       res = res[0].resource;
-      console.log(res);
       let address = "";
       let contactNum = "";
       if ("address" in res) {
@@ -60,12 +62,12 @@ function PatientDetail() {
       };
       setPatient(currentPatient);
     });
-    const res = getMedResById(patientID).then((res: any) => {
+    const res = getMedResById(id).then((res: any) => {
       return res;
     });
     console.log("Raw res: " + res);
     console.log(res);
-    getMedResById(patientID).then((res: any) => {
+    getMedResById(id).then((res: any) => {
       console.log("MedRes:");
       console.log(res);
       if (res.data.total !== 0) {
@@ -83,35 +85,11 @@ function PatientDetail() {
         setDataSource(data);
       }
     });
-  }, [patientID]);
-
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Content",
-      dataIndex: "content",
-      key: "content",
-    },
-    {
-      title: "Status",
-      key: "status",
-      render: (record: any) => {
-        if (record.status === "stopped") {
-          return <Tag color="red">{record.status}</Tag>;
-        } else {
-          return <Tag color="green">{record.status}</Tag>;
-        }
-      },
-    },
-  ];
+  }, [id, router.isReady]);
 
   const App: React.FC = () => (
     <Layout style={{ height: "100vh" }}>
-      <Header>
+      <Header className="header">
         <Space size={"large"} align="center">
           <Avatar shape="square" size="large" icon={<UserOutlined />} />
           <span style={{ color: "white", fontSize: "20px" }}>
@@ -146,8 +124,11 @@ function PatientDetail() {
             <Menu.Item key="2" icon={<ScanOutlined />}>
               Procedure
             </Menu.Item>
-            <Menu.Item key="3" icon={<ProfileOutlined />}>
-              Diagnostic Report
+            <Menu.Item
+              key="3"
+              icon={<ProfileOutlined />}
+            >
+              <Link href={'/patient/DiagnosticReport/'+id}>Diagnostic Report</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<ForkOutlined />}>
               Observation
@@ -155,6 +136,11 @@ function PatientDetail() {
           </Menu>
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
+          <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>Patient List</Breadcrumb.Item>
+            <Breadcrumb.Item>Medication Request</Breadcrumb.Item>
+          </Breadcrumb>
           <Content
             className="site-layout-background"
             style={{
@@ -163,11 +149,11 @@ function PatientDetail() {
               minHeight: 280,
             }}
           >
-            {/* <Table
-              columns={columns}
+            <Table
+              columns={columnsOfMedRequest}
               dataSource={dataSource}
-              style={{ width: "75%" }}
-            /> */}
+              style={{ width: "85%" }}
+            />
           </Content>
         </Layout>
       </Layout>
