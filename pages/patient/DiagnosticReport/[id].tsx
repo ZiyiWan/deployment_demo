@@ -127,7 +127,7 @@ function DiagnosticReport() {
           <Avatar shape="square" size="large" icon={<UserOutlined />} />
           <Col span={4}>
             <strong
-              style={{ color: "white", marginLeft: "30px", fontSize: "22px" }}
+              style={{ color: "white", marginLeft: "25px", fontSize: "18px" }}
             >
               {patient?.name[0].given} {patient?.name[0].family}
             </strong>
