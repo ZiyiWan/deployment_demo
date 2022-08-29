@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { getDiaRptById, getPatientById } from "../../../apiservice/axios";
 import { PatientData } from "../../../dataModel/dataModel";
+import Survey from "../../survey";
 
 function DiagnosticReport() {
   const router = useRouter();
@@ -102,21 +103,27 @@ function DiagnosticReport() {
       title: "",
       key: "result",
       render: (record: any) => {
-        return <Button onClick={()=>{
-          setIsModalVisible(true);
-          console.log(record.id)
-        }}>Result</Button>;
+        return (
+          <Button
+            onClick={() => {
+              setIsModalVisible(true);
+              console.log(record.id);
+            }}
+          >
+            Result
+          </Button>
+        );
       },
     },
   ];
   const dataSource = [
     {
-      key: '1',
-      id: 'pending',
+      key: "1",
+      id: "pending",
       effectiveDate: "xx/xx/xxxx",
     },
   ];
-  
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -206,10 +213,14 @@ function DiagnosticReport() {
               height: "100vh",
             }}
           >
-            <Modal title="Basic Modal" visible={isModalVisible} onCancel={handleCancel}> 
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+            <Modal
+              title="AQoL-4D"
+              visible={isModalVisible}
+              onCancel={handleCancel}
+              width={1200}
+              footer={null}
+            >
+              <Survey />
             </Modal>
             <Table
               columns={columnsOfDiagRpt}

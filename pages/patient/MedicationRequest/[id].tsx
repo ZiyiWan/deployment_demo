@@ -14,10 +14,11 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, MenuProps, Space, Table } from "antd";
+import { Avatar, Button, MenuProps, Modal, Space, Table } from "antd";
 import { Breadcrumb, Layout, Menu } from "antd";
 import React from "react";
 import Link from "next/link";
+import Survey from "../../survey";
 
 function PatientDetail() {
   const router = useRouter();
@@ -25,6 +26,8 @@ function PatientDetail() {
   const id = query.id;
   const [patient, setPatient] = useState<PatientData>();
   const [dataSource, setDataSource] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const { Header, Content, Sider } = Layout;
 
   useEffect(() => {
@@ -86,6 +89,9 @@ function PatientDetail() {
       }
     });
   }, [id, router.isReady]);
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const App: React.FC = () => (
     <Layout style={{ height: "100vh" }}>
@@ -109,7 +115,13 @@ function PatientDetail() {
           <span style={{ color: "white", fontSize: "14px" }}>
             Address: {patient?.address}
           </span>
+          <span style={{paddingLeft:"40px"}}>
+            <Button>Button</Button>
+          </span>
         </Space>
+        <span style={{paddingRight:"0px"}}>
+            <Button>Button 2</Button>
+          </span>
       </Header>
       <Layout>
         <Sider width={200} className="site-layout-background">
@@ -121,14 +133,19 @@ function PatientDetail() {
             <Menu.Item key="1" icon={<SolutionOutlined />}>
               Medication Request
             </Menu.Item>
-            <Menu.Item key="2" icon={<ScanOutlined />}>
-              Procedure
-            </Menu.Item>
             <Menu.Item
-              key="3"
-              icon={<ProfileOutlined />}
+              key="2"
+              icon={<ScanOutlined />}
+              onClick={() => {
+                setIsModalVisible(true);
+              }}
             >
-              <Link href={'/patient/DiagnosticReport/'+id}>Diagnostic Report</Link>
+              AQol-4D
+            </Menu.Item>
+            <Menu.Item key="3" icon={<ProfileOutlined />}>
+              <Link href={"/patient/DiagnosticReport/" + id}>
+                Diagnostic Report
+              </Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<ForkOutlined />}>
               Observation
@@ -154,6 +171,15 @@ function PatientDetail() {
               dataSource={dataSource}
               style={{ width: "85%" }}
             />
+            <Modal
+              title="AQoL-4D"
+              visible={isModalVisible}
+              onCancel={handleCancel}
+              width={1200}
+              footer={null}
+            >
+              <Survey />
+            </Modal>
           </Content>
         </Layout>
       </Layout>

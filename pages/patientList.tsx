@@ -63,7 +63,7 @@ function PatientList() {
       title: "Name",
       key: "name",
       render: (record: any) => (
-        <Link href={`/patient/MedicationRequest/`+record.id}>
+        <Link href={`/patient/`+record.id}>
           <a>{record.name}</a>
         </Link>
       ),
