@@ -57,10 +57,10 @@ function PageLayout() {
           <span
             style={{ color: "white", marginLeft: "40px", fontSize: "14px" }}
           >
-            DOB: {patient?.DOB}
+            DOB: {patient?.birthDate}
           </span>
           <span style={{ color: "white", fontSize: "14px" }}>
-            Sex: {patient?.Sex}
+            Sex: {patient?.gender}
           </span>
           <span style={{ color: "white", fontSize: "14px" }}>
             Phone Number: {patient?.telecom}
