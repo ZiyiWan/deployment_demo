@@ -51,10 +51,11 @@ function DiagnosticReport() {
       }
       const currentPatient: PatientData = {
         name: res.name,
-        DOB: res.birthDate,
-        Sex: res.gender,
+        birthDate: res.birthDate,
+        gender: res.gender,
         address: address,
         telecom: contactNum,
+        meta:{lastUpdated:"s"}
       };
       setPatient(currentPatient);
     });
@@ -141,12 +142,12 @@ function DiagnosticReport() {
           </Col>
           <Col span={16}>
             <span style={{ color: "white", fontSize: "16px" }}>
-              DOB: {patient?.DOB}
+              DOB: {patient?.birthDate}
             </span>
             <span
               style={{ color: "white", fontSize: "16px", marginLeft: "30px" }}
             >
-              Sex: {patient?.Sex}
+              Sex: {patient?.gender}
             </span>
             <span
               style={{ color: "white", fontSize: "16px", marginLeft: "30px" }}

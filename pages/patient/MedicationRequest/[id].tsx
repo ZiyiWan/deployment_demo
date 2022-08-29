@@ -58,10 +58,11 @@ function PatientDetail() {
       }
       const currentPatient: PatientData = {
         name: res.name,
-        DOB: res.birthDate,
-        Sex: res.gender,
+        birthDate: res.birthDate,
+        gender: res.gender,
         address: address,
         telecom: contactNum,
+        meta:{lastUpdated:""}
       };
       setPatient(currentPatient);
     });
@@ -104,10 +105,10 @@ function PatientDetail() {
           <span
             style={{ color: "white", marginLeft: "40px", fontSize: "14px" }}
           >
-            DOB: {patient?.DOB}
+            DOB: {patient?.birthDate}
           </span>
           <span style={{ color: "white", fontSize: "14px" }}>
-            Sex: {patient?.Sex}
+            Sex: {patient?.gender}
           </span>
           <span style={{ color: "white", fontSize: "14px" }}>
             Phone Number: {patient?.telecom}
