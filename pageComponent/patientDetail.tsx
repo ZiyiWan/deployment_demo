@@ -55,7 +55,7 @@ function PatientInfo(props: any) {
         {address}
       </Descriptions.Item>
       <Descriptions.Item label="Allergies" span={3}>
-        <Badge status="processing" text="Running" />
+        <Badge status="warning" text="Egg" />
       </Descriptions.Item>
     </Descriptions>
   );
