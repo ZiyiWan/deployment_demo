@@ -88,3 +88,20 @@ export function getDiaRptById(id: any) {
 
   return result;
 }
+export function getAllergyById(id: any) {
+  const result: any = axios
+    .get(
+        `http://hapi.fhir.org/baseR4/AllergyIntolerance?patient=${id}&_format=json&_pretty=true`
+      //`https://fhir.monash.edu/hapi-fhir-jpaserver/fhir/MedicationRequest?patient=${id}&_format=json&_pretty=true`
+    )
+    .then((res) => {
+      console.log("Response in Axios:" + res);
+      console.log(res)
+      return res;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return result;
+}

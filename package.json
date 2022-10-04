@@ -10,14 +10,16 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "antd": "^4.22.4",
+    "antd": "^4.23.2",
     "axios": "^0.27.2",
     "next": "12.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-phone-number-input": "^3.2.11",
     "survey-core": "^1.9.46",
     "survey-react": "^1.9.46",
-    "survey-react-ui": "^1.9.46"
+    "survey-react-ui": "^1.9.46",
+    "twilio": "^3.82.1"
   },
   "devDependencies": {
     "@types/node": "18.7.1",
