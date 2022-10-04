@@ -9,6 +9,7 @@ import {
 } from "../apiservice/axios";
 import { Table } from "antd";
 import Link from "next/link";
+import CreateButton from "../pageComponent/createPatient";
 
 function PatientList() {
   const [dataSource, setDataSource] = useState([]);
@@ -37,10 +38,10 @@ function PatientList() {
             gender: patient.resource.gender,
           };
           data.push(info);
-        }else{
+        } else {
           let info = {
             id: patient.resource.id,
-            name:"Unknow",
+            name: "Unknow",
             //name: patient.resource.name[0].given[0],
             birthDate: patient.resource.birthDate,
             gender: patient.resource.gender,
@@ -63,7 +64,7 @@ function PatientList() {
       title: "Name",
       key: "name",
       render: (record: any) => (
-        <Link href={`/patient/`+record.id}>
+        <Link href={`/patient/` + record.id}>
           <a>{record.name}</a>
         </Link>
       ),
@@ -179,10 +180,10 @@ function PatientList() {
               gender: patient.resource.gender,
             };
             data.push(info);
-          }else{
+          } else {
             let info = {
               id: patient.resource.id,
-              name:"Unknow",
+              name: "Unknow",
               //name: patient.resource.name[0].given[0],
               birthDate: patient.resource.birthDate,
               gender: patient.resource.gender,
@@ -227,9 +228,16 @@ function PatientList() {
               <Breadcrumb.Item>Home</Breadcrumb.Item>
               <Breadcrumb.Item>List</Breadcrumb.Item>
             </Breadcrumb>
-            <Title type="secondary">Search Patient</Title>
+            <Row justify="space-between">
+              <Col>
+                <Title type="secondary">Search Patient</Title>
+              </Col>
+              <Col>
+                <CreateButton />
+              </Col>
+            </Row>
             <Search
-              placeholder="search patient by name"
+              placeholder="search patient by name or id"
               allowClear
               enterButton="Search"
               size="large"
