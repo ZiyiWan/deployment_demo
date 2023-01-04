@@ -1,9 +1,6 @@
 // pages/index.tsx
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import React from "react";
-import TextArea from "antd/lib/input/TextArea";
 import { Button, DatePicker, Form, Input, Modal, Select } from "antd";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";

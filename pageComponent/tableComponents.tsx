@@ -1,6 +1,5 @@
-import { Button, Modal, Tag } from "antd";
-import { useState } from "react";
-
+import { Tag } from "antd";
+import Link from "next/link";
 
 export const columnsOfMedRequest = [
   {
@@ -26,4 +25,30 @@ export const columnsOfMedRequest = [
   },
 ];
 
+export const columnOfPatientList = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Name",
+    key: "name",
+    render: (record: any) => (
+      <Link href={`/patient/` + record.id}>
+        <a>{record.name}</a>
+      </Link>
+    ),
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+    key: "gender",
+  },
+  {
+    title: "BirthDate",
+    dataIndex: "birthDate",
+    key: "birthDate",
+  },
+];
 

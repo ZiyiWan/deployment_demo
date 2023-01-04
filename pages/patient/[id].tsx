@@ -5,6 +5,7 @@ import {
   ProfileOutlined,
   QuestionCircleOutlined,
   SolutionOutlined,
+  UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import {
@@ -27,6 +28,9 @@ import {
 } from "../../components/survey/content";
 import { getPatientById } from "../../apiservice/axios";
 import PatientInfo from "../../pageComponent/patientDetail";
+import PatientDetailInfo from "../../pageComponent/patientFullDetail";
+import InfectionPrevention from "../../pageComponent/infectionPre";
+import Admin from "../../pageComponent/adminPage";
 
 function PageLayout() {
   const router = useRouter();
@@ -49,13 +53,13 @@ function PageLayout() {
   const componentsSwtich = (key: any) => {
     switch (key) {
       case "item1":
-        return <PatientInfo id={id}/>;
+        return <PatientInfo id={id} />;
       case "item2":
-        return <h1>item2</h1>;
+        return <PatientDetailInfo/>;
       case "item3":
-        return <h3>item3</h3>;
+        return <InfectionPrevention/>;
       case "item4":
-        return <h3>item4</h3>;
+        return <Admin/>;
       case "AQol-4D":
         return <Survey content={questionsForAQol_4D} />;
       case "ED PREM":
@@ -73,8 +77,8 @@ function PageLayout() {
             <strong
               style={{ color: "white", marginLeft: "25px", fontSize: "22px" }}
             >
-              {name?.prefix+" "} 
-              {` ${name?.given}`} 
+              {name?.prefix + " "}
+              {` ${name?.given}`}
             </strong>
           </Col>
           <Col offset={16}>
@@ -90,7 +94,7 @@ function PageLayout() {
         </Row>
       </Header>
       <Layout>
-        <Sider width={200} className="site-layout-background">
+        <Sider width={210} className="site-layout-background">
           <Menu
             selectedKeys={[selectedMenuItem]}
             onClick={(e) => setSelectedMenuItem(e.key)}
@@ -98,22 +102,25 @@ function PageLayout() {
             style={{ height: "100%", borderRight: 0 }}
           >
             <Menu.Item key="item1" icon={<UserOutlined />}>
-              Patient Info
+              Patient Summary
             </Menu.Item>
             <Menu.Item key="item2" icon={<SolutionOutlined />}>
-              Medication Requset
+              Patient Detailed View
             </Menu.Item>
             <Menu.Item key="item3" icon={<ProfileOutlined />}>
-              Diagnostic Report
+              Infection Prevention
             </Menu.Item>
-            <SubMenu
+            <Menu.Item key="item4" icon={<UserAddOutlined />}>
+              Administration
+            </Menu.Item>
+            {/* <SubMenu
               key="item4"
               icon={<QuestionCircleOutlined />}
               title="Questionnaire"
             >
               <Menu.Item key="AQol-4D">AQol-4D</Menu.Item>
               <Menu.Item key="ED PREM">ED PREM</Menu.Item>
-            </SubMenu>
+            </SubMenu> */}
           </Menu>
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>

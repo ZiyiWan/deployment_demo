@@ -10,10 +10,14 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@azure/msal-browser": "^2.31.0",
+    "@azure/msal-react": "^1.4.10",
     "antd": "^4.23.2",
     "axios": "^0.27.2",
+    "chart.js": "^3.9.1",
     "next": "12.2.4",
     "react": "18.2.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
     "react-phone-number-input": "^3.2.11",
     "survey-core": "^1.9.46",
@@ -22,6 +26,7 @@
     "twilio": "^3.82.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
     "@types/node": "18.7.1",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
